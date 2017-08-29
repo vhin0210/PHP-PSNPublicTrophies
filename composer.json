@@ -1,0 +1,12 @@
+{
+    "name": "vhin0210/php-psnpublictrophies",
+    "description": "PHP library to get psn public trophies by psn id",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mark Cristobal",
+            "email": "vhin0210@gmail.com"
+        }
+    ],
+    "require": {}
+}
