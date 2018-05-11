@@ -6,7 +6,9 @@ use PSN\Auth;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-class PSNPublicTrophiesAuth extends Auth {
+class PSNPublicTrophiesAuth {
+
+    public $auth;
 
     //GET data for the X-NP-GRANT-CODE
     private $code_request = array(
@@ -25,22 +27,25 @@ class PSNPublicTrophiesAuth extends Auth {
 
     public function authenticate($email, $password, $ticket = "", $code = "")
     {
-        //Store login data in the array
-        $this->login_request['username'] = $email;
-        $this->login_request['password'] = $password;
-        $this->two_factor_auth_request['ticket_uuid'] = $ticket;
-        $this->two_factor_auth_request['code'] = $code;
+        $this->auth = new Auth($email, $password, $ticket, $code);
+        return $this->auth;
+    }
 
-        //Throws a AuthException if any form of authentication has failed
-        if (!$this->GrabNPSSO() || !$this->GrabCode() || !$this->GrabOAuth())
-        {
-            throw new AuthException($this->last_error);
-        }
+    public function refreshToken($access_token)
+    {
+        $new_token = Auth::GrabNewTokens($access_token);
+        return $new_token;
     }
 
     public function getAuthenticateUrl() {
         $query_string = http_build_query($this->code_request);
         $url = CODE_URL . '?' . $query_string;
         return $url;
+    }
+
+    public function getAuthenticateUrlParameters($url) {
+        $parts = parse_url($url);
+        parse_str($parts['fragment'], $query);
+        return $query;
     }
 }
