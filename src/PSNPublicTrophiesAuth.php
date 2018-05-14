@@ -4,11 +4,16 @@ namespace PSNPublicTrophiesLib;
 
 use PSN\Auth;
 
+use PSN\User;
+use PSN\Trophy;
+use PSN\Friend;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class PSNPublicTrophiesAuth {
 
     public $auth;
+    public $access_token;
 
     //GET data for the X-NP-GRANT-CODE
     private $code_request = array(
@@ -20,20 +25,29 @@ class PSNPublicTrophiesAuth {
         "response_type" => "code"
     );
 
-    public function __construct()
+    public function __construct($access_token = NULL)
     {
-        // nothing to do
+        $this->access_token = $access_token;
+        if ($this->access_token) {
+            $this->refreshToken();
+        }
     }
 
     public function authenticate($email, $password, $ticket = "", $code = "")
     {
         $this->auth = new Auth($email, $password, $ticket, $code);
+        $this->access_token = $this->auth->GetTokens();
         return $this->auth;
     }
 
-    public function refreshToken($access_token)
+    public function refreshToken()
     {
-        $new_token = Auth::GrabNewTokens($access_token);
+        if (!isset($this->access_token['refresh'])) {
+            throw new \Exception('Can\'t find a refresh token');
+        }
+
+        $new_token = Auth::GrabNewTokens($this->access_token['refresh']);
+        $this->access_token = $new_token;
         return $new_token;
     }
 
@@ -47,5 +61,29 @@ class PSNPublicTrophiesAuth {
         $parts = parse_url($url);
         parse_str($parts['fragment'], $query);
         return $query;
+    }
+
+    public function getUser() {
+        return new User($this->access_token);
+    }
+
+    public function getFriend() {
+        return new Friend($this->access_token);
+    }
+
+    public function getTrophy() {
+        return new Trophy($this->access_token);
+    }
+
+    public function getProfile() {
+        $user = $this->getUser();
+
+        return $user->Me();
+    }
+
+    public function getTrophies() {
+        $trophy = $this->getTrophy();
+
+        return $trophy->GetMyTrophies();
     }
 }

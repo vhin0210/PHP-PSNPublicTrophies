@@ -2,6 +2,9 @@
 
 namespace PSNPublicTrophiesLib;
 
+/**
+ * Will be depricting this class soon. Playstation seems doesn't support this anymore.
+ */
 class PSNPublicTrophies {
     const PSN_DOMAIN = 'https://io.playstation.com/';
     const PSN_ENDPOINT = 'playstation/psn/';
