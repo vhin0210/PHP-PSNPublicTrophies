@@ -8,8 +8,13 @@
             "email": "vhin0210@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "tustin/psn-php": "dev-master"
+    },
     "autoload": {
+        "files": [
+            "../../tustin/psn-php/include/Utilities.php"
+        ],
         "psr-4": {
             "PSNPublicTrophiesLib\\": "src/"
         }
