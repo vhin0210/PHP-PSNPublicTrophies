@@ -2,6 +2,8 @@
 
 This is a simple PHP library that will get PSN profile and trophies by PSN ID.
 
+**NOTE: Your PSN account must have 2-Step Verification enabled**
+
 **Install via Composer**
 ```
 composer require vhin0210/php-psnpublictrophies
@@ -14,7 +16,7 @@ $psnAuth = new \PSNPublicTrophiesLib\PSNPublicTrophiesAuth();
 
 // Get Ticket UUID from Playstation Network by loging in to Playstation Network (works best with 2-Step Verification)
 // Get the login URL. Copy the URL and open in a new tab
-// Login and copy the whole URL. If you have 2-Step Verification, don't enter the Verification Code on that PS form.
+// Login and copy the whole URL. Your PSN account must have 2-Step Verification enabled, don't enter the Verification Code on that PS form.
 $authUrl = $psnAuth->getAuthenticateUrl();
 
 // Get Ticket UUID from the URL you copied.
