@@ -46,9 +46,14 @@ class PSNPublicTrophiesAuth {
             throw new \Exception('Can\'t find a refresh token');
         }
 
-        $new_token = Auth::GrabNewTokens($this->access_token['refresh']);
-        $this->access_token = $new_token;
-        return $new_token;
+        try {
+            $new_token = Auth::GrabNewTokens($this->access_token['refresh']);
+            $this->access_token = $new_token;
+            return $new_token;
+        } catch (AuthException $e) {
+            throw new \Exception($e->GetError());
+        }
+        return FALSE;
     }
 
     public function getAuthenticateUrl() {
