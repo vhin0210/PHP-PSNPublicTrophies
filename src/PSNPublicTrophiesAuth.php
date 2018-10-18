@@ -29,7 +29,11 @@ class PSNPublicTrophiesAuth {
     {
         $this->access_token = $access_token;
         if ($this->access_token) {
-            $this->refreshToken();
+            try {
+                $this->refreshToken();
+            } catch (\Exception $e) {
+                
+            }
         }
     }
 
