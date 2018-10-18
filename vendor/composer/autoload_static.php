@@ -6,10 +6,6 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit4509f933c8d3b6fa2f3146d1a8ec6bf9
 {
-    public static $files = array (
-        '5c3c898ee494b5249f0b5e32f51b9998' => __DIR__ . '/../..' . '/../../tustin/psn-php/include/Utilities.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
