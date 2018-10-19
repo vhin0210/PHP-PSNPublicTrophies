@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "tustin/psn-php": "dev-master"
+        "tustin/psn-php": "^1.2"
     },
     "autoload": {
         "files": [],
