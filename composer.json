@@ -12,7 +12,9 @@
         "tustin/psn-php": "^1.2"
     },
     "autoload": {
-        "files": [],
+        "files": [
+          "../../tustin/psn-php/include/Utilities.php"
+        ],
         "psr-4": {
             "PSNPublicTrophiesLib\\": "src/"
         }
